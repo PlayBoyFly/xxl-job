@@ -39,7 +39,7 @@ public class XxlJobScheduler  {
         // admin log report start  对存储在DB中的日志记录进行每日汇总 & 清理保留日期之外的日志记录
         JobLogReportHelper.getInstance().start();
 
-        // start-schedule
+        // start-schedule  任务调度，定时吊起待执行的任务列表执行
         JobScheduleHelper.getInstance().start();
 
         logger.info(">>>>>>>>> init xxl-job admin success.");

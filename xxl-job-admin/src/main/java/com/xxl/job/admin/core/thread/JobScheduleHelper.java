@@ -16,6 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 定时吊起需要执行的任务列表
  * @author xuxueli 2019-05-21
  */
 public class JobScheduleHelper {

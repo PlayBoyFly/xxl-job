@@ -8,9 +8,21 @@ import java.util.Date;
 public class XxlJobRegistry {
 
     private int id;
+    /**
+     * 貌似没啥用
+     */
     private String registryGroup;
+    /**
+     * 注册的appName
+     */
     private String registryKey;
+    /**
+     * 注册的机器信息
+     */
     private String registryValue;
+    /**
+     * 更新时间，作为判断是否超时使用
+     */
     private Date updateTime;
 
     public int getId() {

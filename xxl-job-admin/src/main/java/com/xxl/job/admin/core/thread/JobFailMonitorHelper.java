@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 任务执行失败后进行重试执行和报警操作
  * job monitor instance
  *
  * @author xuxueli 2015-9-1 18:05:56
@@ -50,7 +51,7 @@ public class JobFailMonitorHelper {
 								XxlJobLog log = XxlJobAdminConfig.getAdminConfig().getXxlJobLogDao().load(failLogId);
 								XxlJobInfo info = XxlJobAdminConfig.getAdminConfig().getXxlJobInfoDao().loadById(log.getJobId());
 
-								// 1、fail retry monitor
+								// 1、fail retry monitor  重试一次执行任务
 								if (log.getExecutorFailRetryCount() > 0) {
 									JobTriggerPoolHelper.trigger(log.getJobId(), TriggerTypeEnum.RETRY, (log.getExecutorFailRetryCount()-1), log.getExecutorShardingParam(), log.getExecutorParam(), null);
 									String retryMsg = "<br><br><span style=\"color:#F39C12;\" > >>>>>>>>>>>"+ I18nUtil.getString("jobconf_trigger_type_retry") +"<<<<<<<<<<< </span><br>";
@@ -58,7 +59,7 @@ public class JobFailMonitorHelper {
 									XxlJobAdminConfig.getAdminConfig().getXxlJobLogDao().updateTriggerInfo(log);
 								}
 
-								// 2、fail alarm monitor
+								// 2、fail alarm monitor  进行是否报警的判断
 								int newAlarmStatus = 0;		// 告警状态：0-默认、-1=锁定状态、1-无需告警、2-告警成功、3-告警失败
 								if (info!=null && info.getAlarmEmail()!=null && info.getAlarmEmail().trim().length()>0) {
 									boolean alarmResult = XxlJobAdminConfig.getAdminConfig().getJobAlarmer().alarm(info, log);

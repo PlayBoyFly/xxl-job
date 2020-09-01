@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 任务丢失状态监控
  * job lose-monitor instance
  *
  * @author xuxueli 2015-9-1 18:05:56

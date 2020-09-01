@@ -8,6 +8,7 @@ import java.util.List;
 
 
 /**
+ * 任务配置信息
  * job info
  * @author xuxueli 2016-1-12 18:03:45
  */

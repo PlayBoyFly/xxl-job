@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
+ * 按照appName进行汇总的机器列表
  * Created by xuxueli on 16/9/30.
  */
 @Mapper

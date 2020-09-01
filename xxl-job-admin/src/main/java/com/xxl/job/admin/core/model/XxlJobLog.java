@@ -3,6 +3,7 @@ package com.xxl.job.admin.core.model;
 import java.util.Date;
 
 /**
+ * 任务执行信息log
  * xxl-job log, used to track trigger process
  * @author xuxueli  2015-12-19 23:19:09
  */

@@ -11,6 +11,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 任务注册的定时刷新汇总，刷新时间为30s
  * job registry instance
  * @author xuxueli 2016-10-02 19:10:24
  */
@@ -30,17 +31,17 @@ public class JobRegistryMonitorHelper {
 			public void run() {
 				while (!toStop) {
 					try {
-						// auto registry group
+						// auto registry group   只处理自动注册的
 						List<XxlJobGroup> groupList = XxlJobAdminConfig.getAdminConfig().getXxlJobGroupDao().findByAddressType(0);
 						if (groupList!=null && !groupList.isEmpty()) {
 
-							// remove dead address (admin/executor)
+							// remove dead address (admin/executor)   移除死亡机器超时的
 							List<Integer> ids = XxlJobAdminConfig.getAdminConfig().getXxlJobRegistryDao().findDead(RegistryConfig.DEAD_TIMEOUT, new Date());
 							if (ids!=null && ids.size()>0) {
 								XxlJobAdminConfig.getAdminConfig().getXxlJobRegistryDao().removeDead(ids);
 							}
 
-							// fresh online address (admin/executor)
+							// fresh online address (admin/executor) 从DB获取未超时的执行器的注册机器列表并按照appName坐下分组
 							HashMap<String, List<String>> appAddressMap = new HashMap<String, List<String>>();
 							List<XxlJobRegistry> list = XxlJobAdminConfig.getAdminConfig().getXxlJobRegistryDao().findAll(RegistryConfig.DEAD_TIMEOUT, new Date());
 							if (list != null) {
@@ -60,7 +61,7 @@ public class JobRegistryMonitorHelper {
 								}
 							}
 
-							// fresh group address
+							// fresh group address   刷新分组机器汇总列表
 							for (XxlJobGroup group: groupList) {
 								List<String> registryList = appAddressMap.get(group.getAppname());
 								String addressListStr = null;

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 任务执行log信息
  * job log
  * @author xuxueli 2016-1-12 18:03:06
  */

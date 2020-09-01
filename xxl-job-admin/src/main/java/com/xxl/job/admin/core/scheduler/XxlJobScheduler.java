@@ -21,16 +21,16 @@ public class XxlJobScheduler  {
 
 
     public void init() throws Exception {
-        // init i18n
+        // init i18n  国际化任务阻塞策略
         initI18n();
 
-        // admin registry monitor run
+        // admin registry monitor run   机器注册的心跳监测和在线地址刷新
         JobRegistryMonitorHelper.getInstance().start();
 
-        // admin fail-monitor run
+        // admin fail-monitor run  任务执行失败重新吊起&发送报警相关
         JobFailMonitorHelper.getInstance().start();
 
-        // admin lose-monitor run
+        // admin lose-monitor run  任务执行丢失状态监控
         JobLosedMonitorHelper.getInstance().start();
 
         // admin trigger pool start

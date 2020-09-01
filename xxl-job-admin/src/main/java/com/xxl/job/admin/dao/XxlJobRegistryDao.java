@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * 单个机器的心跳注册
  * Created by xuxueli on 16/9/30.
  */
 @Mapper

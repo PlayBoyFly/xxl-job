@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 存在在DB中的日志进行清理操作
  * job log report helper
  *
  * @author xuxueli 2019-11-22

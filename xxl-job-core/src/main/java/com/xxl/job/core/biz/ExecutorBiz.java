@@ -3,6 +3,7 @@ package com.xxl.job.core.biz;
 import com.xxl.job.core.biz.model.*;
 
 /**
+ * 执行器接口api
  * Created by xuxueli on 17/3/1.
  */
 public interface ExecutorBiz {

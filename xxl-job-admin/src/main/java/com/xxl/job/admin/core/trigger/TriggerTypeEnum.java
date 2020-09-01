@@ -3,6 +3,7 @@ package com.xxl.job.admin.core.trigger;
 import com.xxl.job.admin.core.util.I18nUtil;
 
 /**
+ * 触发器类型
  * trigger type enum
  *
  * @author xuxueli 2018-09-16 04:56:41

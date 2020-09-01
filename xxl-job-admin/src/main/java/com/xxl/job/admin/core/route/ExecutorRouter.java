@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 /**
+ * 执行器路由策略
  * Created by xuxueli on 17/3/10.
  */
 public abstract class ExecutorRouter {

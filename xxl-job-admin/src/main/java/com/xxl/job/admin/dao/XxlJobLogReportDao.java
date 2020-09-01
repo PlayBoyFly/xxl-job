@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * 按照天进行任务执行情况的汇总
  * job log
  * @author xuxueli 2019-11-22
  */

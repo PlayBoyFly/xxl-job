@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Date;
 
 /**
+ * 任务触发器
  * xxl-job trigger
  * Created by xuxueli on 17/7/13.
  */

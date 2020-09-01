@@ -33,10 +33,10 @@ public class XxlJobScheduler  {
         // admin lose-monitor run  任务执行丢失状态监控
         JobLosedMonitorHelper.getInstance().start();
 
-        // admin trigger pool start
+        // admin trigger pool start  调度中心的线程池模型
         JobTriggerPoolHelper.toStart();
 
-        // admin log report start
+        // admin log report start  对存储在DB中的日志记录进行每日汇总 & 清理保留日期之外的日志记录
         JobLogReportHelper.getInstance().start();
 
         // start-schedule

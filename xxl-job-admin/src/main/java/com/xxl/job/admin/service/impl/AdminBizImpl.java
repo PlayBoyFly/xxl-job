@@ -139,6 +139,7 @@ public class AdminBizImpl implements AdminBiz {
             return new ReturnT<String>(ReturnT.FAIL_CODE, "Illegal Argument.");
         }
 
+        //更新大于写入
         int ret = xxlJobRegistryDao.registryUpdate(registryParam.getRegistryGroup(), registryParam.getRegistryKey(), registryParam.getRegistryValue(), new Date());
         if (ret < 1) {
             xxlJobRegistryDao.registrySave(registryParam.getRegistryGroup(), registryParam.getRegistryKey(), registryParam.getRegistryValue(), new Date());

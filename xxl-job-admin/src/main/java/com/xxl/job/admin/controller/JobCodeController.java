@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * 更新任务配置信息
  * job code controller
  * @author xuxueli 2015-12-19 16:13:16
  */

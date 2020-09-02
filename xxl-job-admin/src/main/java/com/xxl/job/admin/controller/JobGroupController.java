@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
+ * 任务组相关的地址操作
  * job group controller
  * @author xuxueli 2016-10-02 20:52:56
  */

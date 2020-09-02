@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 任务操作日志 +  杀死任务等
  * index controller
  * @author xuxueli 2015-12-19 16:13:16
  */

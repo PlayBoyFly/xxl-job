@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
+ * 对外提供的统一api接口
  * Created by xuxueli on 17/5/10.
  */
 @Controller
@@ -55,12 +56,15 @@ public class JobApiController {
 
         // services mapping
         if ("callback".equals(uri)) {
+            //客户端执行器的成功or失败的回调
             List<HandleCallbackParam> callbackParamList = GsonTool.fromJson(data, List.class, HandleCallbackParam.class);
             return adminBiz.callback(callbackParamList);
         } else if ("registry".equals(uri)) {
+            //提供新执行器注册 +  执行器心跳时间调整
             RegistryParam registryParam = GsonTool.fromJson(data, RegistryParam.class);
             return adminBiz.registry(registryParam);
         } else if ("registryRemove".equals(uri)) {
+            //提供执行器下线的操作
             RegistryParam registryParam = GsonTool.fromJson(data, RegistryParam.class);
             return adminBiz.registryRemove(registryParam);
         } else {

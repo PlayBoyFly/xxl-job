@@ -1,0 +1,1 @@
+mysqldump -u root -pzhichao123 --all-databases >xxl_job.sql

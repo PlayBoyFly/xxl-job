@@ -35,6 +35,7 @@ public class SampleXxlJob {
 
     /**
      * 1、简单任务示例（Bean模式）
+     * 23 0/1 * * * ?
      */
     @XxlJob("demoJobHandler")
     public ReturnT<String> demoJobHandler(String param) throws Exception {
@@ -50,6 +51,10 @@ public class SampleXxlJob {
 
     /**
      * 2、分片广播任务
+     * 日志格式内容:
+     * 2020-09-03 08:40:34 [com.xxl.job.executor.service.jobhandler.SampleXxlJob#shardingJobHandler]-[61]-[Thread-128] 分片参数：当前分片序号 = 1, 总分片数 = 2
+     * 2020-09-03 08:45:34 [com.xxl.job.executor.service.jobhandler.SampleXxlJob#shardingJobHandler]-[61]-[Thread-135] 分片参数：当前分片序号 = 0, 总分片数 = 2
+     * 34 0/5 * * * ?
      */
     @XxlJob("shardingJobHandler")
     public ReturnT<String> shardingJobHandler(String param) throws Exception {
@@ -75,6 +80,7 @@ public class SampleXxlJob {
 
     /**
      * 3、命令行任务
+     * 34 0/10 * * * ?
      */
     @XxlJob("commandJobHandler")
     public ReturnT<String> commandJobHandler(String param) throws Exception {

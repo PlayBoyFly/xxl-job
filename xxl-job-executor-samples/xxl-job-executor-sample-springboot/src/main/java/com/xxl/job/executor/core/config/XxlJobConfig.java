@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * xxl-job的客户端配置启动类
  * xxl-job config
  *
  * @author xuxueli 2017-04-28

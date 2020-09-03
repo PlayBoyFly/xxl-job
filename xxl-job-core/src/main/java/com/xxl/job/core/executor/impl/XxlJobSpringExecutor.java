@@ -20,6 +20,7 @@ import java.util.Map;
 
 
 /**
+ * xxl-job的执行器，伴随着bean的初始化执行
  * xxl-job executor (for spring)
  *
  * @author xuxueli 2018-11-01 09:24:52
@@ -35,14 +36,15 @@ public class XxlJobSpringExecutor extends XxlJobExecutor implements ApplicationC
         // init JobHandler Repository
         /*initJobHandlerRepository(applicationContext);*/
 
-        // init JobHandler Repository (for method)
+        // init JobHandler Repository (for method)   扫描spring加载的所有的XXl_JOB的注解，放入本地的map中
         initJobHandlerMethodRepository(applicationContext);
 
-        // refresh GlueFactory
+        // refresh GlueFactory  初始化spring的脚本工厂
         GlueFactory.refreshInstance(1);
 
         // super start
         try {
+            //客户端相关的线程启动 ------>
             super.start();
         } catch (Exception e) {
             throw new RuntimeException(e);

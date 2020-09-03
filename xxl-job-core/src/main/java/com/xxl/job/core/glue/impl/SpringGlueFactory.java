@@ -13,6 +13,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 /**
+ * 负责完成脚本创建bean的依赖注入操作
  * @author xuxueli 2018-11-01
  */
 public class SpringGlueFactory extends GlueFactory {

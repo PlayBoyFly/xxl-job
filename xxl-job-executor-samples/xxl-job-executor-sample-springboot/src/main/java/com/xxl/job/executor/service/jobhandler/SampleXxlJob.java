@@ -125,6 +125,7 @@ public class SampleXxlJob {
      *      "url: http://www.baidu.com\n" +
      *      "method: get\n" +
      *      "data: content\n";
+     *  调用其他的类似外网的http的接口
      */
     @XxlJob("httpJobHandler")
     public ReturnT<String> httpJobHandler(String param) throws Exception {
@@ -228,6 +229,7 @@ public class SampleXxlJob {
 
     /**
      * 5、生命周期任务示例：任务初始化与销毁时，支持自定义相关逻辑；
+     * 支持任务的初始化和销毁
      */
     @XxlJob(value = "demoJobHandler2", init = "init", destroy = "destroy")
     public ReturnT<String> demoJobHandler2(String param) throws Exception {

@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.*;
 
 /**
+ * 基于netty实现的http协议的server
  * Copy from : https://github.com/xuxueli/xxl-rpc
  *
  * @author xuxueli 2020-04-11 21:25
@@ -85,10 +86,10 @@ public class EmbedServer {
 
                     logger.info(">>>>>>>>>>> xxl-job remoting server start success, nettype = {}, port = {}", EmbedServer.class, port);
 
-                    // start registry
+                    // start registry  启动注册程序
                     startRegistry(appname, address);
 
-                    // wait util stop
+                    // wait util stop  等待关闭
                     future.channel().closeFuture().sync();
 
                 } catch (InterruptedException e) {
@@ -162,13 +163,13 @@ public class EmbedServer {
             bizThreadPool.execute(new Runnable() {
                 @Override
                 public void run() {
-                    // do invoke
+                    // do invoke  执行权限校验  + 本地调用
                     Object responseObj = process(httpMethod, uri, requestData, accessTokenReq);
 
-                    // to json
+                    // to json  序列化
                     String responseJson = GsonTool.toJson(responseObj);
 
-                    // write response
+                    // write response  给调度端
                     writeResponse(ctx, keepAlive, responseJson);
                 }
             });
@@ -192,11 +193,14 @@ public class EmbedServer {
             // services mapping
             try {
                 if ("/beat".equals(uri)) {
+                    //心跳监测
                     return executorBiz.beat();
                 } else if ("/idleBeat".equals(uri)) {
+                    //检查某个jobId的执行器是否空闲
                     IdleBeatParam idleBeatParam = GsonTool.fromJson(requestData, IdleBeatParam.class);
                     return executorBiz.idleBeat(idleBeatParam);
                 } else if ("/run".equals(uri)) {
+                    //触发客户端执行逻辑
                     TriggerParam triggerParam = GsonTool.fromJson(requestData, TriggerParam.class);
                     return executorBiz.run(triggerParam);
                 } else if ("/kill".equals(uri)) {

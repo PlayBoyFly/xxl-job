@@ -77,7 +77,7 @@ public class XxlJobExecutor  {
         // init TriggerCallbackThread  客户端执行器执行结果上报
         TriggerCallbackThread.getInstance().start();
 
-        // init executor-server
+        // init executor-server   初始化内嵌的server,用来跟调度端进行交互处理
         initEmbedServer(address, ip, port, appname, accessToken);
     }
     public void destroy(){

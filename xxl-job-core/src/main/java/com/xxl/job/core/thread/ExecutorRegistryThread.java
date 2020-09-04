@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 客户端执行器注册线程
  * Created by xuxueli on 17/3/2.
  */
 public class ExecutorRegistryThread {
@@ -39,7 +40,7 @@ public class ExecutorRegistryThread {
             @Override
             public void run() {
 
-                // registry
+                // registry  周期性的进行注册续约
                 while (!toStop) {
                     try {
                         RegistryParam registryParam = new RegistryParam(RegistryConfig.RegistType.EXECUTOR.name(), appname, address);
@@ -76,7 +77,7 @@ public class ExecutorRegistryThread {
                     }
                 }
 
-                // registry remove
+                // registry remove 执行器关闭后，就触发注册移除的操作
                 try {
                     RegistryParam registryParam = new RegistryParam(RegistryConfig.RegistType.EXECUTOR.name(), appname, address);
                     for (AdminBiz adminBiz: XxlJobExecutor.getAdminBizList()) {

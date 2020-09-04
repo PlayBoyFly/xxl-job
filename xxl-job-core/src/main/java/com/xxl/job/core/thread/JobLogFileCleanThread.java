@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 客户端日志清理线程
  * job file clean thread
  *
  * @author xuxueli 2017-12-29 16:23:43

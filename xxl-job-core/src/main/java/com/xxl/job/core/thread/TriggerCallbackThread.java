@@ -21,6 +21,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 客户端执行器的回调线程+失败重试
  * Created by xuxueli on 16/7/22.
  */
 public class TriggerCallbackThread {
@@ -34,6 +35,7 @@ public class TriggerCallbackThread {
     /**
      * job results callback queue
      */
+    //TODO  为什么是个无界队列呢，回调线程要是出问题了，岂不是会造成队列无限增加呢
     private LinkedBlockingQueue<HandleCallbackParam> callBackQueue = new LinkedBlockingQueue<HandleCallbackParam>();
     public static void pushCallBack(HandleCallbackParam callback){
         getInstance().callBackQueue.add(callback);
@@ -110,6 +112,7 @@ public class TriggerCallbackThread {
             public void run() {
                 while(!toStop){
                     try {
+                        //TODO 重试失败过多，会不会造成文件句柄耗尽呢？
                         retryFailCallbackFile();
                     } catch (Exception e) {
                         if (!toStop) {
@@ -178,6 +181,7 @@ public class TriggerCallbackThread {
             }
         }
         if (!callbackRet) {
+            //TODO  调用不成功为什么要以时间戳为文件后缀创建文件呢？
             appendFailCallbackFile(callbackParamList);
         }
     }
@@ -187,6 +191,7 @@ public class TriggerCallbackThread {
      */
     private void callbackLog(List<HandleCallbackParam> callbackParamList, String logContent){
         for (HandleCallbackParam callbackParam: callbackParamList) {
+            //TODO 这个调用成功了为什么要以服务端的日志库自增Id为文件名呢，不是日志自增Id直接打印进入日志文件不就行了。 https://github.com/xuxueli/xxl-job/issues/1946
             String logFileName = XxlJobFileAppender.makeLogFileName(new Date(callbackParam.getLogDateTim()), callbackParam.getLogId());
             XxlJobContext.setXxlJobContext(new XxlJobContext(
                     -1,

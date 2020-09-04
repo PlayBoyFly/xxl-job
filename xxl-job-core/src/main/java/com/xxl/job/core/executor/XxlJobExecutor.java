@@ -64,17 +64,17 @@ public class XxlJobExecutor  {
     // ---------------------- start + stop ----------------------
     public void start() throws Exception {
 
-        // init logpath
+        // init logpath  初始化日志路径
         XxlJobFileAppender.initLogPath(logPath);
 
-        // init invoker, admin-client
+        // init invoker, admin-client   注册调度端的地址信息
         initAdminBizList(adminAddresses, accessToken);
 
 
-        // init JobLogFileCleanThread
+        // init JobLogFileCleanThread  客户端日志清理线程
         JobLogFileCleanThread.getInstance().start(logRetentionDays);
 
-        // init TriggerCallbackThread
+        // init TriggerCallbackThread  客户端执行器执行结果上报
         TriggerCallbackThread.getInstance().start();
 
         // init executor-server

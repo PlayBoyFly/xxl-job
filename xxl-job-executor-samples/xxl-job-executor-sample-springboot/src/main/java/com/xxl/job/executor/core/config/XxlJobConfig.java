@@ -17,27 +17,35 @@ import org.springframework.context.annotation.Configuration;
 public class XxlJobConfig {
     private Logger logger = LoggerFactory.getLogger(XxlJobConfig.class);
 
+    //调度器的地址
     @Value("${xxl.job.admin.addresses}")
     private String adminAddresses;
 
+    //通信加密token
     @Value("${xxl.job.accessToken}")
     private String accessToken;
 
+    //分组名称，分片等调度会影响分配
     @Value("${xxl.job.executor.appname}")
     private String appname;
 
+    //客户端执行器的地址，可以不填，不填会默认取第一个可用网卡的IP地址
     @Value("${xxl.job.executor.address}")
     private String address;
 
+    //客户端执行器的IP
     @Value("${xxl.job.executor.ip}")
     private String ip;
 
+    //客户端执行器的端口
     @Value("${xxl.job.executor.port}")
     private int port;
 
+    //客户端的日志路径
     @Value("${xxl.job.executor.logpath}")
     private String logPath;
 
+    //客户端的日志保留天数
     @Value("${xxl.job.executor.logretentiondays}")
     private int logRetentionDays;
 

@@ -193,10 +193,10 @@ public class EmbedServer {
             // services mapping
             try {
                 if ("/beat".equals(uri)) {
-                    //心跳监测
+                    //心跳监测，客户端对应的接口实现类为ExecutorBizImpl
                     return executorBiz.beat();
                 } else if ("/idleBeat".equals(uri)) {
-                    //检查某个jobId的执行器是否空闲
+                    //检查客户端某个jobId的执行线程是否空闲(队列or运行中)
                     IdleBeatParam idleBeatParam = GsonTool.fromJson(requestData, IdleBeatParam.class);
                     return executorBiz.idleBeat(idleBeatParam);
                 } else if ("/run".equals(uri)) {
@@ -204,9 +204,11 @@ public class EmbedServer {
                     TriggerParam triggerParam = GsonTool.fromJson(requestData, TriggerParam.class);
                     return executorBiz.run(triggerParam);
                 } else if ("/kill".equals(uri)) {
+                    //中断客户端某个jobId所在线程的执行
                     KillParam killParam = GsonTool.fromJson(requestData, KillParam.class);
                     return executorBiz.kill(killParam);
                 } else if ("/log".equals(uri)) {
+                    //读取客户端日志
                     LogParam logParam = GsonTool.fromJson(requestData, LogParam.class);
                     return executorBiz.log(logParam);
                 } else {

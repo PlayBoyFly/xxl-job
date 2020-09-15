@@ -77,6 +77,7 @@ public class JobScheduleHelper {
 
                         // 1、pre read
                         long nowTime = System.currentTimeMillis();
+                        //取出未来5s内待执行的任务列表
                         List<XxlJobInfo> scheduleList = XxlJobAdminConfig.getAdminConfig().getXxlJobInfoDao().scheduleJobQuery(nowTime + PRE_READ_MS, preReadCount);
                         if (scheduleList!=null && scheduleList.size()>0) {
                             // 2、push time-ring
@@ -84,45 +85,41 @@ public class JobScheduleHelper {
 
                                 // time-ring jump
                                 if (nowTime > jobInfo.getTriggerNextTime() + PRE_READ_MS) {
-                                    // 2.1、trigger-expire > 5s：pass && make next-trigger-time
+                                    // 2.1、trigger-expire > 5s：pass && make next-trigger-time，代表触发时间过期5s了。
                                     logger.warn(">>>>>>>>>>> xxl-job, schedule misfire, jobId = " + jobInfo.getId());
 
-                                    // fresh next
+                                    // fresh next ， 更新下次触发时间
                                     refreshNextValidTime(jobInfo, new Date());
 
                                 } else if (nowTime > jobInfo.getTriggerNextTime()) {
-                                    // 2.2、trigger-expire < 5s：direct-trigger && make next-trigger-time
+                                    // 2.2、trigger-expire < 5s：direct-trigger && make next-trigger-time，代表触发时间在应该触发的5s之内
 
-                                    // 1、trigger
+                                    // 1、trigger  触发任务执行
                                     JobTriggerPoolHelper.trigger(jobInfo.getId(), TriggerTypeEnum.CRON, -1, null, null, null);
                                     logger.debug(">>>>>>>>>>> xxl-job, schedule push trigger : jobId = " + jobInfo.getId() );
 
-                                    // 2、fresh next
+                                    // 2、fresh next  刷新下次执行时间
                                     refreshNextValidTime(jobInfo, new Date());
 
-                                    // next-trigger-time in 5s, pre-read again
+                                    // next-trigger-time in 5s, pre-read again，代表5s之内需要再次执行任务
                                     if (jobInfo.getTriggerStatus()==1 && nowTime + PRE_READ_MS > jobInfo.getTriggerNextTime()) {
 
                                         // 1、make ring second
                                         int ringSecond = (int)((jobInfo.getTriggerNextTime()/1000)%60);
 
-                                        // 2、push time ring
+                                        // 2、push time ring  推送到队列里面去
                                         pushTimeRing(ringSecond, jobInfo.getId());
 
-                                        // 3、fresh next
+                                        // 3、fresh next  刷新下次触发时间
                                         refreshNextValidTime(jobInfo, new Date(jobInfo.getTriggerNextTime()));
-
                                     }
 
                                 } else {
-                                    // 2.3、trigger-pre-read：time-ring trigger && make next-trigger-time
-
+                                    // 2.3、trigger-pre-read：time-ring trigger && make next-trigger-time，代表还没到触发时间，直接放入时钟轮里面待执行
                                     // 1、make ring second
                                     int ringSecond = (int)((jobInfo.getTriggerNextTime()/1000)%60);
-
                                     // 2、push time ring
                                     pushTimeRing(ringSecond, jobInfo.getId());
-
                                     // 3、fresh next
                                     refreshNextValidTime(jobInfo, new Date(jobInfo.getTriggerNextTime()));
 
@@ -130,7 +127,7 @@ public class JobScheduleHelper {
 
                             }
 
-                            // 3、update trigger info
+                            // 3、update trigger info  更新任务状态
                             for (XxlJobInfo jobInfo: scheduleList) {
                                 XxlJobAdminConfig.getAdminConfig().getXxlJobInfoDao().scheduleUpdate(jobInfo);
                             }
